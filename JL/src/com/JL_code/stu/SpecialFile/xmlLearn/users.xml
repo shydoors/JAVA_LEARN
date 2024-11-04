@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <!-- 这是一个注释 -->
+    <!-- 这个注释方式让我想起了html-->
+    <user id="1">
+        <name>John Doe</name>
+        <email>john.doe@example.com</email>
+        <age>30</age>
+        <nickname>aaa</nickname>
+    </user>
+    <user id="2">
+        <name>Jane Smith</name>
+        <email>jane.smith@example.com</email>
+        <age>25</age>
+        <nickname>ccc</nickname>
+    </user>
+</users>
