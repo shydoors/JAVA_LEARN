@@ -104,6 +104,29 @@ public class stu_1_10 {
 }
 ```
 
+sc.next() 和 sc.nextLine 的区别
+他们两个都是，区别在于：
+
+—— next() 从遇到第一个有效字符开始扫描，遇到第一个空格或换行符结束。
+—— nextLine() 则是扫描剩下的所有字符串知道遇到回车为止。
+
+||同|异|
+|-|-|-|
+|sc.next()|用来接收用户的输入|遇到' '或'\n'结束输入，即：接收一个元素|
+|sc.nextLine()||遇到'\n'结束输入,即：接收一整行|
+```java
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);//in: 11 11
+        System.out.println(sc.next());//out: 11
+    }
+```
+```java
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);//in: 11 11
+        System.out.println(sc.nextLine());//out: 11 11
+    }
+```
+
 - 猜数游戏示例代码：
 
 ```java
@@ -541,9 +564,10 @@ class STU{
 ```
 ![JL10.png](Java_learn10.png)
 
-### **各类关键字的效果表**：封装规范
+### 封装规范
 
 **一个原则**：<font color='red'>合理暴露，合理隐藏</font>
+各类关键字的效果表
 
 | 关键字 | 效果 |
 | :- | :- |
@@ -571,3 +595,519 @@ class STU{
 > 工程中，类的内部属性太多了，内部再定义一个JavaBean，仅仅只是为了封装那些数据需要输入输出的数据
 >
 > 即：数据和数据的业务处理相分离
+
+### [<font color='red'>常见API</font>:]( https://java.cunzaima.cn/jdk21/doc-zh/api/java.base/java/lang/StringTemplate.html)
+
+#### String 
+
+1. 为基本数据类型，存储为的地址
+
+2. new 一个字符串时，可以自动将char 数组，bytes数组，转为String
+
+   ```java
+   String x1=new String();//空字符串
+   String x2="x1+x2";
+   String x3=new String("x1+x2");//内容为x1+x2,emm,多此一举，直接用=进行初始化就是了呗
+   char[] ch_s={'a','魏','虹','明'};
+   String x4=new String(ch_s);//内容是"a魏虹明"
+   byte bys={'97','98','99'};
+   String x5=new String(bys);
+   /*
+   * the output of x5 r 'abc' according to ASCII code
+   * 1. turn the byte's into char's.
+   * 2. link the char one by one in order.
+   */
+   ```
+
+3. **commom methods**
+
+   |type of var(in)| type of var(out)  | method |desc|
+   |:--- | :--- | :---- | :------ |
+   |String | String |  substring(idx_begin,idx_end)  |保留下标在[idx_begin,idx_end]内的字符，其余舍弃（包前不包后）<br>首字符对应的下标为0<br>e.g. x="A:123"  x.substring(2) -> "123"|
+   |String|String[]|split()|默认以‘ ’为分割符将String分割开来，也可以是某个字符，或某个字符串。注意，首元素一般是空字符串<br><font color='red'>对，空的字符串也是一个字符串</font>,刚学的时候，花了一个下午才找到这个bug<br>"#A:111 #A:11" -> ["","111","11"]|
+   
+
+![JL11](Java_learn11.png)
+
+4. 注意事项
+
+   > String 类的对象不可变字符串对象
+   >
+   > 对字符串的处理本质上是对字符串常量的处理，产生了新的String类的对象
+
+   ![JL2](Java_learn12.png)
+
+> 常量池：
+>
+> 用双引号括起来的字符串作为字符串常量存放在堆内存中
+>
+> String实际上存放的是字符串的<font color='red'>地址</font>，比较字符串是否相等时，最好用equals(),不考虑大小写时用equalsIgnoreCase()
+>
+> 
+
+![JL13](Java_learn13.png)
+
+```java
+char[] ch_s={'A','B','C'};
+String s1=new String(ch_s);
+String s2=new String(ch_s);
+String s3="ABC";// 因为 内容一致
+String s4="ABC";// 所以 在堆内存.常量池中中的地址也是一致的
+System.out.println(s1==s2)         //输出 false
+System.out.println(s1.equals(s2))  //输出 true
+System.out.println(s3==s4))        //输出 true
+System.out.println(s3.equals(s4))  //输出 true
+    /*
+    * new出来的数据都是放在堆内存中的
+    * 输出false，因为new出来的String地址不一致
+    * 用equals()就对了,emm,想念C++的第一天
+    */
+```
+
+#### ArrayList
+
+1. 集合 容器
+
+2. 常见的方法
+
+   ![JL4](Java_learn14.png)
+3. 几个注意
+> ArrayList,参考python中list类
+>
+> ```java
+> ArrayList arr=new ArrayList();//这是一个泛型类，什么类型都能存
+> ArrayList<int> arr=new ArrayList<int>();//这样就只能放进int型
+> ```
+>
+> add(int idx ,E e);在索引为idx和idx-1之间插入一个元素。
+>
+> 注意：remove()方法有返回值
+>
+> set(int idx,E Elem);替换方法，将索引为idx处的元素替换为Elem,并返回修改之前的元素。
+
+## 类的进一步学习
+
+### static
+
+> [!important]
+> 有static的成员变量，方法叫类变量，类方法（也有静态变量，静态方法的说法）
+>
+> - 凡是静态的变化，都会作用于所有类,且只会加载一次，能很好的减少内存。由于这个特性，经常被用于写一些程序员调试用的方法
+>
+>   这些方法被统称为工具类。典型的工具类就是Math
+>
+>  其余的叫实例变量，实例方法（也有动态变量，动态方法的说法）
+
+<img src="Java_learn15.png" alt="JL15" style="zoom: 50%;" />
+
+这个例子中，哪怕只是对另一个类进行修改，所有的类中的String name也会被修改。可以用来实现DFS,BFS等算法，被类和类的所有对象所共有。
+
+> [!WARNING]
+>
+> >  main方法中其实也可以接收数据，甚至可以拿来用
+>
+> ![JL16](Java_learn16.png)
+
+#### 注意
+
+>[!important]
+>
+>1. 类方法中不允许有this关键字
+>2. 可访问类的成员，但不可以直接访问实例成员
+>3. 实例可以访问类的成员,或方法（不建议用实例访问类方法）
+>
+
+### 代码块的应用
+
+- 类代码块er，加载类的时候运行，只运行一次，且先于构造器运行
+
+- 实例代码块er，创建类的实例的时候运行，多少个实例就运行多少次，先于构造器
+
+  格式
+
+  ![JL7](Java_learn17.png)
+
+ #### 设计模式（design pattern）
+
+1. 创建型：
+
+>
+>- 单例设计模式（饿汉式）：这样这个类能且只能声明一个实例对象
+>
+> ```java
+> class A{
+>     private static A a = new A();//定义一个类变量，来储存类
+>     private A(){//构造器私有
+>     }
+>     public static A getObject(){
+>         return a;//写一个类方法进行创建实例类
+>     }
+> }
+> //拿对象时，对象创建好了，典型的有Runtime（获取程序运行时间的类）,任务管理器
+> ```
+>
+>- 单例设计模式（懒汉式）
+>
+> ```java
+> class B{
+>   private static B b;  //定义一个类变量，来存储类
+>     private B(){}//构造器私有
+>        public static B getInstance(){
+>            if(b==null){b=new B();}
+>            return b;//用的时候现场new一个
+>     }
+> }
+> //拿对象时才去创建对象
+> ```
+>
+>- **原型模式**（Prototype Pattern）：通过复制现有的实例来创建新的实例。
+>- **工厂模式**（Factory Pattern）：通过工厂类创建对象，而不是直接使用new关键字。
+>- **抽象工厂模式**（Abstract Factory Pattern）：创建一系列相关或依赖对象的接口，而无需指定它们具体的类。
+>- **建造者模式**（Builder Pattern）：逐步构建一个复杂的对象，允许用户只通过指定复杂对象的类型和内容就可以构建它们
+
+2. 结构型：
+ >|name | use for|
+ >|:-|:--|
+ >|**适配器模式**（Adapter Pattern）|允许不兼容的接口之间进行通信|
+ >| **组合模式**（Composite Pattern） | 允许将对象组合成树形结构以表示“部分-整体”的层次结构 |
+ >|**适配器模式**（Adapter Pattern）|允许不兼容的接口之间进行通信|
+ >| **组合模式**（Composite Pattern）|允许将对象组合成树形结构以表示“部分-整体”的层次结构|
+ >| **装饰器模式**（Decorator Pattern）|动态地给一个对象添加一些额外的职责|
+ >| **外观模式**（Facade Pattern）|提供一个统一的接口，用来访问子系统中的一群接口|
+ >| **享元模式**（Flyweight Pattern）|通过共享技术支持大量细粒度对象的复用|
+ >| **代理模式**（Proxy Pattern）|为其他对象提供一种代理以控制对这个对象的访问|
+ >| **桥接模式**（Bridge Pattern）|将抽象部分与实现部分分离，使它们都可以独立地变化|
+3. 行为型：
+>|name | use for|
+ >|:-|:--|
+ >| | |
+ ![JL19](java_learn19.png)
+### 继承
+
+```java
+public B extends A(){
+    
+}//B继承A
+//B为子类，能继承父类的非私有属性，方法
+//A为父类（基类，超类）
+```
+
+![JL18](Java_learn18.png)
+
+>  [!warning]
+>
+>  单继承性：一个子类不能同时继承多个父类。好比一个人不能同时是2个人的儿子（干儿子不算，别杠）
+>
+>  多层继承：子类可以作为父类被继承
+
+### 封装
+
+### 多态
+
+  ![jl20](Java_learn20.png)
+![jl21](Java_learn21.png)
+![jl22](Java_learn22.png)
+
+- 接口（interface）
+
+- 抽象类（abstract）
+
+  |方面 | 具体区别 |
+  | :--: | :--- |
+  | 抽象对象|抽象类：一种事物的抽象，即对类抽象<br>接口：行为的抽象 |
+  |语法层面|抽象类可以提供成员方法的实现细节<br>接口中只能存在public abstract方法|
+  |成员变量|抽象类中的成员变量可以是各种类型的<br>接口中的成员变量只能是public static final类型|
+  | 方法 | 接口中不能含有静态代码块和静态方法<br>抽象类可以有静态代码块和静态方法 |
+  | 继承 | 一个类只能继承一个抽象类<br>一个类却可以实现多个接口 |
+
+```Java
+public class AlarmDoor extends Door implements Alarm {
+    public void open() {
+        // 实现open方法
+        //手动实现该行为
+    }
+
+    public void close() {
+        // 实现close方法
+    }
+
+    public void alarm() {
+        // 实现alarm方法
+    }
+}
+
+//抽象类
+public abstract class Door {
+    int a=1;//必须初始化变量
+    public abstract void open();//不能有代码块儿
+    public abstract void close();//只能有声明
+    public abstract void sound();
+    public static void eat() {
+        System.out.println("动物吃东西");
+    }
+}
+//接口
+public interface Alarm {
+    void alarm();//
+}
+```
+### 说明：
+| name         | desc                                                                                    |
+|--------------|:----------------------------------------------------------------------------------------|
+| JavaBean     | 1. 只有数据                                                                                 |
+| Interface    | 1. 只有行为的端口，无行为的具体内容，即：无代码块<br/>2. 只有行为的端口<br/>3.子类可以继承多个接口(用implements)                 |
+| abstract class| 1. 类的模板（行为只有定义,无具体内容）<br/>2. 可以有数据，具体行为只能在子类中override<br/>3. 子类继承一个&#40;用extends&#41;，不可被访问，实例化 |
+## 枚举（enum）
+- 枚举类的<font color='red'>第一行</font>只能罗列一些名称,这些名称都是常量(由public static finaly修饰),并且每个常量记住的都是枚举类的一个对象。
+>![反编译后的枚举类.png](Java_learn24.png)
+- 枚举类的构造器都是私有的(写不写都只能是私有的),因此,枚举类对外不能创建对象。
+- 枚举都是最终类,不可以被继承。
+- 枚举类中,从<font color='red'>第二行</font>开始,可以定义类的其他各种成员。
+- 编译器为枚举类新增了几个方法,并且枚举类都是继承:java.lang.Enum类的,从enum类也会继承到一些方法
+## 泛型（genalize object）
+### 使用
+对应C++的容器
+
+| name  | 注解 |
+|-------|----|
+|List| 表  |
+|Set| 集合 |
+|Map| 哈希 |
+```java
+@ Test
+public void test() {
+    ArrayList<String> list = new ArrayList<>();
+    list.add("aaa");
+    list.add("bbb");
+    list.add("ccc");
+    for (int i = 0; i < list.size(); i++) {
+        System.out.println((String)list.get(i));
+    }
+}
+```
+```out
+aaa
+bbb
+ccc
+```
+### 备注
+1. - [!warning]
+在泛型类的类型参数未确定时，静态成员有可能被调用 
+> 因此泛型类的类型参数是不能在静态成员中使用的<br/>
+> 泛型类不可以加static关键字
+2. 泛型类不只接受一个类型参数，它还可以接受多个类型参数
+- 不传入时默认Object
+- > | 简写 | 含义 |
+  > |----|------|
+  >| T  | 代表一般的任何类                            |
+  >| E  | 代表 Element 元素的意思，或者 Exception 异常的意思 |
+  >| K  | 代表 Key 的意思                          |
+  >| V  | 代表 Value 的意思，通常与 K 一起配合使用           |
+  >| S  | 代表 Subtype 的意思，文章后面部分会讲解示意          |
+
+
+e.g.
+```java
+//泛型方法
+public class Test<U> {
+    // 该方法只是使用了泛型类定义的类型参数，不是泛型方法
+    public void testMethod(U u){
+        System.out.println(u);
+    }
+
+    // <T> 真正声明了下面的方法是一个泛型方法,其中的T表示new方法时传入的一个参数
+    public <T> T testMethod1(T t){
+        return t;
+    }
+} 
+//泛型接口
+interface IUsb<U, R> {
+    int n = 10;
+    U name;// 报错！ 接口中的属性默认是静态的，因此不能使用类型参数声明
+    R get(U u);// 普通方法中，可以使用类型参数
+    void hi(R r);// 抽象方法中，可以使用类型参数
+    // 在jdk8 中，可以在接口中使用默认方法, 默认方法可以使用泛型接口的类型参数
+    default R method(U u) {
+        return null;
+    }
+}
+```
+## 原子类（Objetc）
+**Object**是所有类的祖宗，所以Object的方法，所有类都可以用
+> | 常用类|                       |
+> |----|-----------------------|
+> | public String toString | 返回字符串的表示形式            |
+> | public boolean  equals(Ob) | 判断两个类是否相等（默认比较地址），注意要重写 |
+> | protcted Object clone | 对象克隆                  |
+## IO
+
+API java.base.java.io
+## 一项目处理时的特殊文件
+### .txt
+- 随便写东西
+- 怎么读出来，怎么处理就看个人了
+### .properties 
+- 属性文件
+- 只能存键值对
+- 格式如下
+- ```properties
+  # 这样写注释
+  # 可以用来存用户的账号名字和密码信息
+  admin=123 
+  #键在前，值在等号后面是properties文件的标准格式
+  #不可以在键值对后面加注释
+  lis=liss
+  全蛋=volunteermyant
+  # 这是一个注释
+  database.url=jdbc:mysql://localhost:3306/mydb
+  database.username=root
+  database.password=123456
+  ```
+### .xml
+[java的xml讲解](https://blog.csdn.net/weixin_44105632/article/details/126805910?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522E527B400-BB4C-4C9B-953D-6C46AB923D71%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=E527B400-BB4C-4C9B-953D-6C46AB923D71&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_click~default-1-126805910-null-null.142^v100^pc_search_result_base7&utm_term=java%20xml&spm=1018.2226.3001.4187)
+- 属性文件
+- 示例xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+  <users>
+    <!-- 这是一个注释 -->
+    <!-- 这个注释方式让我想起了html-->
+    <user id="1">
+        <name>John Doe</name>
+        <email>john.doe@example.com</email>
+        <age>30</age>
+    </user>
+    <user id="2">
+        <name>Jane Smith</name>
+        <email>jane.smith@example.com</email>
+        <age>25</age>
+    </user>
+</users>
+```
+- 调用xml的示例代码
+```java
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import java.io.File;
+/**
+ * 虽然IDEA会自动补齐需要调用的口语
+ * 但还是要注意一下这些库
+ */
+public class XMLReader {
+    public static void main(String[] args) {
+        try {
+            // 创建一个DocumentBuilderFactory
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            // 创建一个DocumentBuilder
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            // 解析XML文件并获取Document对象
+            Document document = builder.parse(new File("users.xml"));//这里调用
+            // 获取根元素
+            Element root = document.getDocumentElement();
+            System.out.println("Root element: " + root.getNodeName());
+
+            // 获取所有user元素
+            NodeList userList = document.getElementsByTagName("user");
+
+            // 遍历user元素
+            for (int i = 0; i < userList.getLength(); i++) {
+                Node userNode = userList.item(i);
+                if (userNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element userElement = (Element) userNode;
+                    String id = userElement.getAttribute("id");
+                    String name = userElement.getElementsByTagName("name").item(0).getTextContent();
+                    String email = userElement.getElementsByTagName("email").item(0).getTextContent();
+                    String age = userElement.getElementsByTagName("age").item(0).getTextContent();
+
+                    System.out.println("User  ID: " + id);
+                    System.out.println("Name: " + name);
+                    System.out.println("Email: " + email);
+                    System.out.println("Age: " + age);
+                    System.out.println();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+- 添加依赖项（默认maven）
+```xml
+<dependency>
+    <groupId>org.w3c.dom</groupId>
+    <artifactId>dom</artifactId>
+    <version>3.0.0</version>
+</dependency>
+```
+### .json
+
+
+## 线程||超线程||进程
+多线程：软硬件上实现多条执行流程的技术（CPU负责调度执行）
+```java
+public class Main {
+    public static void main(String[] args) {
+        PrimeThread x1=new PrimeThread();
+        x1.start();
+        for(int i=1;i<=5;i++) {
+            System.out.println("主线程运行了",i);
+        }/**
+         * 开启线程
+         * 启动后便调用run方法
+         * */
+    }
+}
+class PrimeThread extends Thread { 
+    long minPrime;
+    PrimeThread (long minPrime) {
+        this.minPrime = minPrime;
+    }
+    @Override
+    public void run() {
+        // compute primes larger than minPrime
+        for(int i=1;i<=5;i++) {
+            System.out.println("子线程运行了",i);
+        }
+    }
+}
+```
+运行结果：
+![img.png](java_learn26.png)
+
+主线程和子线程并不能实现真正意义的并行。只能**高频**，**随机**地交替运行
+这样创建的线程
+优点：编码简单
+缺点：已继承了Thread类，无法再继承其它的类了
+所以，一般用的是另外的线程创建方法，示例代码如下
+```java
+public class Main {
+    public static void main(String[] args) {
+        PrimeThread x1=new PrimeThread();
+        new Thread(x1).start();
+        /**
+         * x1实际上是任务类，将任务类x1传递给线程类
+         */
+        for(int i=1;i<=5;i++) {
+            System.out.println("主线程运行了",i);
+        }/**
+         * 开启线程
+         * 启动后便调用run方法
+         * */
+    }
+}
+class PrimeThread implements Runnable { 
+    long minPrime;
+    PrimeThread (long minPrime) {
+        this.minPrime = minPrime;
+    }
+    @Override
+    public void run() {
+        // compute primes larger than minPrime
+        for(int i=1;i<=5;i++) {
+            System.out.println("子线程运行了",i);
+        }
+    }
+}//重新写一个接口
+```
+## [maven的学习](MavenLearn.md)

@@ -1,6 +1,6 @@
-package cn.java.pintia;
+package cn.remeber.pintia;
 import java.util.Scanner;
-public class Main {
+public class ManyError_s {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {

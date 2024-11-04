@@ -1,4 +1,4 @@
-package com.JL_code.stu.SpecialFile;
+package com.JL_code.stu.SpecialFile.xmlLearn;
 
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
