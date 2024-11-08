@@ -21,61 +21,60 @@
  - 修改.jar源：<br>
 默认的.jar拉去网站是国外的，建议多配几个镜像
 一个源找不到会从上往下找下一个源里的，jar
-```xml
-<mirror>
-    <id>aliyunmaven</id>
-    <mirrorOf>*</mirrorOf>
-    <name>阿里云公共仓库</name>
-    <url>https://maven.aliyun.com/repository/public</url>
-</mirror><!--这个是阿里云-->
-<mirror>
-    <id>huaweicloud</id>
-    <mirrorOF>*</mirrorOF>
-    <url>https://repo.huaweicloud.com/repository/maven/</url>
-</mirror><!--这个是华为云-->
-```
-
 
 ![img_1.png](Maven2.png)
+项目中，示例.xml代码讲解
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-   
-    <!--这一坨是该文件的’唯一地址‘ -->
-    <!--专业人士也称其为坐标信息 
-        调用文件时就是靠这一坨来识别
-        -->
-    <groupId>com.xushu</groupId>  <!--项目内部的模块名 -->
-    <artifactId>hello</artifactId><!--对应的项目名字 -->
-    <version>1.0-SNAPSHOT</version>
-    <!--这里的version表示开发者自定义的版本
-        开发者可能会写很多个版本的文件
-        这个标签用于区别不同版本的文件
-        
-        这里的1.0-SNAPSHOT表示上线前的快照版本
-        -->
-    
-    <!--.jar的引用 -->
-    <dependencies><!--这个一般是‘依赖’的意思-->
-        <dependency>
-            <groupId>exmaple</groupId>
-            <artifactId>hello</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>exmaple_1</groupId>
-            <artifactId>hello_1</artifactId>
-        </dependency>
+
+    <groupId>PTA.template</groupId>
+    <artifactId>JavaIO</artifactId>
+    <!--
+    这个是你的项目名字
+    -->
+
+    <version>1.0-SNAPSHOT</version><!--
+    1.0 snapshot 快照，一般是程序员自己调试用的
+    版本有一般是3个数字组组成，以python 3.12.1举例
+     3  表示主版本
+     12 表示次版本
+     6  表示修订版本
+    版本之间改动的越大，版本改东的数字就越靠前。
+    比如python 2到python 3 废除了许多用语法，改动较大
+    比如python 2.3开始用的排序算法tim_sort()，它的上一个版本是2.2
+    -->
+    <dependencies>
+
     </dependencies>
-    <!--引用-->
-    
-    
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <!--
+
+        语言分为两种，编译型语言和解释型语言
+
+        具体区别就是，
+        编译型先生成可执行文件，然后才能执行.比如C,C++,Java
+        解释型语言边解释边执行，比如python,javascript,typescript
+
+        maven.compiler.source指的就是编译用的JDK版本
+        maven.compiler.target值的是执行文件用JDK版本
+
+
+        java的可执行文件是.class文件
+        C对应的是.exe
+        C++对应的是.exe
+        (其实python也可以生成.exe,看你用的是什么库了)
+        -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--
+        project.build.sourceEncoding 这个规定编译时用的字节包
+        -->
     </properties>
+
 </project>
 ```

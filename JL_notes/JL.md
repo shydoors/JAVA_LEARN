@@ -1073,7 +1073,7 @@ class PrimeThread extends Thread {
 }
 ```
 运行结果：
-![img.png](java_learn26.png)
+![img.png](java_learn25.png)
 
 主线程和子线程并不能实现真正意义的并行。只能**高频**，**随机**地交替运行
 这样创建的线程
