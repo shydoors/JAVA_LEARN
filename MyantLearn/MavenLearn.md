@@ -181,6 +181,8 @@ mvn archetype:generate -DgroupId=com.stu.myant -DartifactId=java-project
 -DarchetypeArtifactId=maven-archetype-quickstart -Dversion=0.0.1-snapshot 
 -DinteractiveMode=false
 ```
+
+
 3. 快速创建web工程
 ```cmd
 mvn archetype:generate 
@@ -195,3 +197,4 @@ mvn archetype:generate
 左为用maven快速创建的java项目<br>
 右为用maven快速创建的web工程<br>
 ![快速项目的对比](MavenLearn/Maven1.png)
+注意，java内部的文件夹是com\stu\myant
