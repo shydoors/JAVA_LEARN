@@ -146,7 +146,9 @@ graph TD
 </project>
 ```
 
-# maven常见命令
+# maven命令
+
+## 常见命令
 maven的其中一个优势就是可以通过命令行进行自动化构建<br>
 还有就是扫描工程时会自动下载相应的文件，比如.jar包<br>
 
@@ -162,7 +164,9 @@ maven的其中一个优势就是可以通过命令行进行自动化构建<br>
 | mvn help    |                                                                                                                                                                             |
 
  ## 快速创建项目/工程
+
 快速创建项目/工程的maven命令
+
 1. 快速创建工程
 ```cmd
 mvn archetype:generate
@@ -174,15 +178,20 @@ mvn archetype:generate
 2. 快速创建java工程
 ```cmd
 mvn archetype:generate -DgroupId=com.stu.myant -DartifactId=java-project
-DarchetypeArtifactId=maven-archetype-quickstart -Dversion=0.0.1-snapshot 
-DinteractiveMode=false
+-DarchetypeArtifactId=maven-archetype-quickstart -Dversion=0.0.1-snapshot 
+-DinteractiveMode=false
 ```
 3. 快速创建web工程
 ```cmd
 mvn archetype:generate 
 -DgroupId=com.stu.myant
 -DartifactId=web-project
-DarchetypeArtifactId=maven-archetype-webapp  --这里是告诉maven你所需要的模板名称
+-DarchetypeArtifactId=maven-archetype-webapp  --这里是告诉maven你所需要的模板名称
 -Dversion=0.0.1-snapshot 
-DinteractiveMode=false
+-DinteractiveMode=false
 ```
+### 快速创建的对比
+对比<br>
+左为用maven快速创建的java项目<br>
+右为用maven快速创建的web工程<br>
+![快速项目的对比](MavenLearn/Maven1.png)

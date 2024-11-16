@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!--
+    这里的modelVersion 不是指maven的版本，
+    而是pom.xml标准的版本
+    简单来说，就是规定了这个pom.xml改用那个版本的标准来写pom.xml文件，
+    -->
+    <groupId>com.ds.stu.BiaryTree</groupId>
+    <artifactId>java_pro</artifactId><!-- 项目ID -->
+    <version>1.5-SNAPSHOT</version> <!-- 项目版本 -->
+
+
+    <name>java_pro</name> <!-- 项目名称 -->
+    <description>Homework of Data Structure </description> <!-- 项目描述 -->
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source> <!--编译.java用的Javac 版本 -->
+        <maven.compiler.target>17</maven.compiler.target> <!--运行target文件时用的Javac 版本  -->
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>1.5.2</version> <!-- 请检查最新版本 -->
+        </dependency>
+        <!-- 你可以在这里添加其他依赖 -->
+    </dependencies>
+</project>
